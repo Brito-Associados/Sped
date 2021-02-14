@@ -62,7 +62,7 @@ namespace Sped
 
             wb.Author = "Jairo Brito";
 
-            var pathFile = Path.Combine(Path.GetDirectoryName(pathSped), "APURACAO.xlsx");
+            var pathFile = Path.Combine(Path.GetDirectoryName(pathSped), "APURACAO_",DateTime.Now.ToString("yyMMddHHmmss"),".xlsx");
             wb.SaveAs(pathFile);
 
             var pathExel = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Microsoft Office\root\Office16\EXCEL.EXE");
