@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Sped
 {
@@ -9,7 +10,7 @@ namespace Sped
 
         public Servicos Servicos { get; }
 
-        public Apuracao(Produtos produtos, string idApuracao)
+        public Apuracao(Produtos produtos, string idApuracao = null)
         {
             Produtos = produtos;
             _idApuracao = idApuracao;
@@ -20,17 +21,26 @@ namespace Sped
             Servicos = servicos;
         }
 
-        public object ObterProdutos()
+        public object ObterProdutosPorApuracao()
         {
-            return Produtos.Where(p => p.Apuracao.Equals(_idApuracao))
-                           .GroupBy(p => p.Cfop)
-                           .Select(p => new
-                           {
-                               CFOP = p.Key,
-                               VALOR_CONTABIL = p.Sum(pp => pp.ValorContabil),
-                               BASE_CALCULO = p.Sum(pp => pp.BaseCalculo),
-                               ICMS = p.Sum(pp => pp.Icms)
-                           });
+            IEnumerable<Produto> produtos;
+            if (!string.IsNullOrEmpty(_idApuracao))
+            {
+                produtos = Produtos.Where(p => p.Apuracao.Equals(_idApuracao));
+            }
+            else
+            {
+                produtos = Produtos;
+            }
+
+            return produtos.GroupBy(p => p.Cfop)
+               .Select(p => new
+               {
+                   CFOP = p.Key,
+                   VALOR_CONTABIL = p.Sum(pp => pp.ValorContabil),
+                   BASE_CALCULO = p.Sum(pp => pp.BaseCalculo),
+                   ICMS = p.Sum(pp => pp.Icms)
+               });
         }
 
         public object ObterServicos()

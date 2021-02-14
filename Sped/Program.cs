@@ -38,16 +38,27 @@ namespace Sped
             var wb = produtosToXlsx.Workbook;
             wb.Worksheet(1).Name = "PRODUTOS";
 
+            var apConsolidada = new Apuracao(produtos);
+            var a = apConsolidada.ObterProdutosPorApuracao(); 
+            wb.AddWorksheet(a.GetIXLWorksheet("CONSOLIDADA"));
+
             foreach (var idApuracao in apuracoes)
             {
                 var apProdutos = new Apuracao(produtos, idApuracao);
 
-                wb.AddWorksheet(apProdutos.ObterProdutos().GetIXLWorksheet(idApuracao));
+                wb.AddWorksheet(apProdutos.ObterProdutosPorApuracao().GetIXLWorksheet(idApuracao));
             }
 
-            var apServicos = new Apuracao(new Servicos(lines));
+            var servicos = new Servicos(lines);
 
-            wb.AddWorksheet(apServicos.ObterServicos().GetIXLWorksheet("SERVICOS"));
+            if (servicos.Count > 0)
+            {
+                wb.AddWorksheet(servicos.GetIXLWorksheet("SERVICOS"));
+            }
+
+            var apServicos = new Apuracao(servicos);
+
+            wb.AddWorksheet(apServicos.ObterServicos().GetIXLWorksheet("APURACAO_SERVICOS"));
 
             wb.Author = "Jairo Brito";
 

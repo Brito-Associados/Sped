@@ -29,7 +29,7 @@ namespace Sped.Test
             {
                 var apProdutos = new Apuracao(produtos, idApuracao);
 
-                wb.AddWorksheet(apProdutos.ObterProdutos().GetIXLWorksheet(idApuracao));
+                wb.AddWorksheet(apProdutos.ObterProdutosPorApuracao().GetIXLWorksheet(idApuracao));
             }
             var servicos = new Servicos(lines);
 
