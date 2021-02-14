@@ -39,7 +39,7 @@ namespace Sped
             wb.Worksheet(1).Name = "PRODUTOS";
 
             var apConsolidada = new Apuracao(produtos);
-            var a = apConsolidada.ObterProdutosPorApuracao(); 
+            var a = apConsolidada.ObterProdutosPorApuracao();
             wb.AddWorksheet(a.GetIXLWorksheet("CONSOLIDADA"));
 
             foreach (var idApuracao in apuracoes)
@@ -62,7 +62,7 @@ namespace Sped
 
             wb.Author = "Jairo Brito";
 
-            var pathFile = Path.Combine(Path.GetDirectoryName(pathSped), "APURACAO_",DateTime.Now.ToString("yyMMddHHmmss"),".xlsx");
+            var pathFile = Path.Combine(Path.GetDirectoryName(pathSped), $"APURACAO_{DateTime.Now:yyMMddHHmmss}.xlsx");
             wb.SaveAs(pathFile);
 
             var pathExel = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"Microsoft Office\root\Office16\EXCEL.EXE");
